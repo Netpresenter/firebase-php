@@ -48,7 +48,7 @@ class MessagingApiExceptionConverter
             return new ApiConnectionFailed('Unable to connect to the API: '.$exception->getMessage(), $exception->getCode(), $exception);
         }
 
-        return new MessagingError($exception->getMessage(), $exception->getCode());
+        return new MessagingError($exception->getMessage(), $exception->getCode(), $exception);
     }
 
     public function convertResponse(ResponseInterface $response, ?Throwable $previous = null): MessagingException
