@@ -35,7 +35,7 @@ class ApiClient
         $request = $this->requestFactory
             ->createRequest(
                 'POST',
-                'https://next.requestcatcher.com/test',
+                'https://fcm.googleapis.com/v1/projects/'.$this->projectId.'/messages:send',
             )
         ;
 
