@@ -75,7 +75,14 @@ class ApiClient
     public function sendAsync(RequestInterface $request, array $options = []): PromiseInterface
     {
         return $this->client->sendAsync($request, $options)
-            ->then(null, function (Throwable $e): never {
+            ->then(function () {
+                /** @var \Illuminate\Log\LogManager $logger */
+                $logManager = app()->make(\Illuminate\Log\LogManager::class);
+                $logger = $logManager->channel('single');
+                $logger->debug('sendAsync exception', [
+                    'openssl' => openssl_error_string()
+                ]);
+            }, function (Throwable $e): never {
                 /** @var \Illuminate\Log\LogManager $logger */
                 $logManager = app()->make(\Illuminate\Log\LogManager::class);
                 $logger = $logManager->channel('single');
