@@ -76,6 +76,13 @@ class ApiClient
     {
         return $this->client->sendAsync($request, $options)
             ->then(null, function (Throwable $e): never {
+                /** @var \Illuminate\Log\LogManager $logger */
+                $logManager = app()->make(\Illuminate\Log\LogManager::class);
+                $logger = $logManager->channel('single');
+                $logger->debug('sendAsync exception', [
+                    'openssl' => openssl_error_string()
+                ]);
+
                 throw $this->errorHandler->convertException($e);
             })
         ;
