@@ -260,7 +260,9 @@ final class Messaging implements Contract\Messaging
             foreach ($messages as $message) {
                 $request = $this->messagingApi->createSendRequestForMessage($message, $validateOnly);
 
-                yield $this->messagingApi->sendAsync($request);
+                yield $this->messagingApi->sendAsync($request, [
+                    'verify' => false
+                ]);
             }
         };
     }
