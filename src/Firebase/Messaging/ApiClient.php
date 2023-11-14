@@ -75,6 +75,7 @@ class ApiClient
     public function sendAsync(RequestInterface $request, array $options = []): PromiseInterface
     {
         return $this->client->sendAsync($request, $options)
+            ->wait()
             ->then(function () {
                 /** @var \Illuminate\Log\LogManager $logger */
                 $logManager = app()->make(\Illuminate\Log\LogManager::class);
